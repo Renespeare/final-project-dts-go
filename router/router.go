@@ -5,8 +5,22 @@ import (
 	"final-project-dts-go/middlewares"
 
 	"github.com/gin-gonic/gin"
+
+	_ "final-project-dts-go/docs"
+	ginSwagger "github.com/swaggo/gin-swagger"
+	swaggerFiles "github.com/swaggo/files"
 )
 
+// title MyGram API - Final Project DTS Go
+// @version 1.0
+// @description This is a API similar to blog for final project DTS Go
+// @termsOfService http://swagger.io/terms/
+// @contact.name API support
+// @contact.email mridhor08@gmail.com
+// @license.name Apache 2.0 
+// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
+// @host localhost:8080
+// @BasePath /
 func StartServer() *gin.Engine {
 	router := gin.Default()
 
@@ -47,6 +61,8 @@ func StartServer() *gin.Engine {
 			socialMediaRouter.DELETE("/:socialMediaId", middlewares.SocialMediaAuthorization(), controllers.DeleteSocialMedia)
 		}
 	}
+
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	return router
 }

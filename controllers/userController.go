@@ -13,31 +13,40 @@ var (
 	appJSON = "application/json"
 )
 
-func UserRegister(c *gin.Context)  {
+// UserRegister godoc
+// @Summary Register new user
+// @Description Regiter new user
+// @Tags users
+// @Accept json
+// @Produce json
+// @Param models.User body models.User true "user register"
+// @Success 201 {object} models.User
+// @Router /users/register [post]
+func UserRegister(ctx *gin.Context)  {
 	var (
 		db = database.GetDB()
-		contentType = helpers.GetContentType(c)
+		contentType = helpers.GetContentType(ctx)
 		User = models.User{}
 	)
 	_, _ = db, contentType
 
 	if contentType == appJSON {
-		c.ShouldBindJSON(&User)
+		ctx.ShouldBindJSON(&User)
 	} else {
-		c.ShouldBind(&User)
+		ctx.ShouldBind(&User)
 	}
 
 	err := db.Debug().Create(&User).Error
 
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
+		ctx.JSON(http.StatusBadRequest, gin.H{
 			"error": "Bad Request",
 			"message": err.Error(),
 		})
 		return
 	}
 
-	c.JSON(http.StatusCreated, gin.H{
+	ctx.JSON(http.StatusCreated, gin.H{
 		"id":		User.ID,
 		"username": User.Username,
 		"age": User.Age,
@@ -45,26 +54,35 @@ func UserRegister(c *gin.Context)  {
 	})
 }
 
-func UserLogin(c *gin.Context)  {
+// UserLogin godoc
+// @Summary Login user
+// @Description User can login with email and password
+// @Tags users
+// @Accept json
+// @Produce json
+// @Param models.User body models.User true "user login"
+// @Success 200 {object} models.User
+// @Router /users/login [post]
+func UserLogin(ctx *gin.Context)  {
 	var (
 		db = database.GetDB()
-		contentType = helpers.GetContentType(c)
+		contentType = helpers.GetContentType(ctx)
 		User = models.User{}
 	)
 	_, _ = db, contentType
 	password := ""
 
 	if contentType == appJSON {
-		c.ShouldBindJSON(&User)
+		ctx.ShouldBindJSON(&User)
 	} else {
-		c.ShouldBind(&User)
+		ctx.ShouldBind(&User)
 	}
 
 	password = User.Password
 	err := db.Debug().Where("email = ?", User.Email).Take(&User).Error
 
 	if err != nil {
-		c.JSON(http.StatusUnauthorized, gin.H{
+		ctx.JSON(http.StatusUnauthorized, gin.H{
 			"error": "Unauthorized",
 			"message": "Invalid email/password",
 		})
@@ -74,7 +92,7 @@ func UserLogin(c *gin.Context)  {
 	comparePass := helpers.ComparePass([]byte(User.Password), []byte(password))
 
 	if !comparePass {
-		c.JSON(http.StatusUnauthorized, gin.H{
+		ctx.JSON(http.StatusUnauthorized, gin.H{
 			"error": "Unauthorized",
 			"message": "Invalid email/password",
 		})
@@ -83,7 +101,7 @@ func UserLogin(c *gin.Context)  {
 
 	token := helpers.GenerateToken(User.ID, User.Email)
 
-	c.JSON(http.StatusOK, gin.H{
+	ctx.JSON(http.StatusOK, gin.H{
 		"token": token,
 	})
 }

@@ -14,6 +14,15 @@ import (
 	"gorm.io/gorm"
 )
 
+// CreatePhoto godoc
+// @Summary Create photo
+// @Description Create photo corresponding to the input
+// @Tags photos
+// @Accept json
+// @Produce json
+// @Param models.Photo body models.Photo true "create photo"
+// @Success 200 {object} models.Photo
+// @Router /photos [post]
 func CreatePhoto(ctx *gin.Context)  {
 	var (
 		db = database.GetDB()
@@ -57,6 +66,14 @@ func CreatePhoto(ctx *gin.Context)  {
 	ctx.JSON(http.StatusCreated, Photo)
 }
 
+// GetAllPhoto godoc
+// @Summary Get all photo
+// @Description Get details of all photo
+// @Tags photos
+// @Accept json
+// @Produce json
+// @Success 200 {object} models.Photo
+// @Router /photos [get]
 func GetAllPhoto(ctx *gin.Context)  {
 	var (
 		db = database.GetDB()
@@ -77,6 +94,15 @@ func GetAllPhoto(ctx *gin.Context)  {
 	ctx.JSON(http.StatusOK, Photos)
 }
 
+// GetOnePhoto godoc
+// @Summary Get details for a given Id
+// @Description Get details of photo corresponding to the input Id
+// @Tags photos
+// @Accept json
+// @Produce json
+// @Param Id path int true "ID of the photo"
+// @Success 200 {object} models.Photo
+// @Router /photos/{Id} [get]
 func GetOnePhoto(ctx *gin.Context)  {
 	var (
 		db = database.GetDB()
@@ -100,6 +126,15 @@ func GetOnePhoto(ctx *gin.Context)  {
 	ctx.JSON(http.StatusOK, Photo)
 }
 
+// UpdatePhoto godoc
+// @Summary Update photo identified by the given Id
+// @Description Update the photo corresponding to the input Id
+// @Tags photos
+// @Accept json
+// @Produce json
+// @Param Id path int true "ID of the photo to be updated"
+// @Success 200 {object} models.Photo
+// @Router /photos/{id} [put]
 func UpdatePhoto(ctx *gin.Context)  {
 	var (
 		db = database.GetDB()
@@ -144,6 +179,15 @@ func UpdatePhoto(ctx *gin.Context)  {
 	ctx.JSON(http.StatusOK, Photo)
 }
 
+// DeletePhoto godoc
+// @Summary Delete photo identified by the given Id
+// @Description Delete the photo corresponding to the input Id
+// @Tags photos
+// @Accept json
+// @Produce json
+// @Param Id path int true "ID of the photo to be deleted"
+// @Success 204 "No Content"
+// @Router /photos/{id} [delete]
 func DeletePhoto(ctx *gin.Context)  {
 	var (
 		db = database.GetDB()

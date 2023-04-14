@@ -13,6 +13,15 @@ import (
 	"gorm.io/gorm"
 )
 
+// CreateComment godoc
+// @Summary Create comment
+// @Description Create comment corresponding to the input
+// @Tags comments
+// @Accept json
+// @Produce json
+// @Param models.Comment body models.Comment true "create comment"
+// @Success 200 {object} models.Comment
+// @Router /comments [post]
 func CreateComment(ctx *gin.Context)  {
 	var (
 		db = database.GetDB()
@@ -78,6 +87,14 @@ func CreateComment(ctx *gin.Context)  {
 	ctx.JSON(http.StatusCreated, Comment)
 }
 
+// GetAllBook godoc
+// @Summary Get all comment
+// @Description Get details of all comment with given photo id
+// @Tags comments
+// @Accept json
+// @Produce json
+// @Success 200 {object} models.Comment
+// @Router /comments [get]
 func GetAllComment(ctx *gin.Context)  {
 	var (
 		db = database.GetDB()
@@ -120,6 +137,15 @@ func GetAllComment(ctx *gin.Context)  {
 	ctx.JSON(http.StatusOK, Comments)
 }
 
+// GetOneComment godoc
+// @Summary Get details for a given Id
+// @Description Get details of comment corresponding to the input Id
+// @Tags comments
+// @Accept json
+// @Produce json
+// @Param Id path int true "ID of the comment"
+// @Success 200 {object} models.Comment
+// @Router /comments/{Id} [get]
 func GetOneComment(ctx *gin.Context)  {
 	var (
 		db = database.GetDB()
@@ -145,6 +171,15 @@ func GetOneComment(ctx *gin.Context)  {
 	ctx.JSON(http.StatusOK, Comment)
 }
 
+// UpdateComment godoc
+// @Summary Update comment identified by the given Id
+// @Description Update the comment corresponding to the input Id
+// @Tags comments
+// @Accept json
+// @Produce json
+// @Param Id path int true "ID of the comment to be updated"
+// @Success 200 {object} models.Comment
+// @Router /comments/{id} [put]
 func UpdateComment(ctx *gin.Context)  {
 	var (
 		db = database.GetDB()
@@ -191,6 +226,15 @@ func UpdateComment(ctx *gin.Context)  {
 	ctx.JSON(http.StatusOK, Comment)
 }
 
+// DeleteComment godoc
+// @Summary Delete comment identified by the given Id
+// @Description Delete the comment corresponding to the input Id
+// @Tags comments
+// @Accept json
+// @Produce json
+// @Param Id path int true "ID of the comment to be deleted"
+// @Success 204 "No Content"
+// @Router /comments/{id} [delete]
 func DeleteComment(ctx *gin.Context)  {
 	var (
 		db = database.GetDB()
