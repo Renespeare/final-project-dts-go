@@ -16,5 +16,5 @@ func main()  {
 	fmt.Println("Successfully connected to database")
 
 	// routers.StartServer().Run(PORT)
-	routers.StartServer().Run(os.Getenv("PORT"))
+	routers.StartServer().Run(":" + os.Getenv("PORT"))
 }
