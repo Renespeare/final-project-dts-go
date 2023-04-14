@@ -13,7 +13,7 @@
         },
         "version": "1.0"
     },
-    "host": "localhost:8080",
+    "host": "https://final-project-dts-go-production.up.railway.app/api",
     "basePath": "/",
     "paths": {
         "/comments": {

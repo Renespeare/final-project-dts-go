@@ -76,7 +76,7 @@ definitions:
       username:
         type: string
     type: object
-host: localhost:8080
+host: https://final-project-dts-go-production.up.railway.app/api
 info:
   contact:
     email: mridhor08@gmail.com
